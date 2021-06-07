@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% extends "main_app/base.html" %}
+{% load my_filter %}
+  {% block after_nav %}
+
+    <div class="container">
+      <h2>Podsumowanie meczów</h2>
+      <!-- {% if not stats20 %}
+        <p>Current pool not included.</p>
+      {% endif %} -->
+
+      <table>
+
+        <thead class="end-row">
+          <th>Map</th>
+          <th class="greenback">MW</th>
+          <th class="redback">ML</th>
+          <th class="yellowback">MT</th>
+          <th class="yellowback">WR</th>
+          <th class="blueback">Wait</th>
+          <th class="blueback">Dur</th>
+          <th class="redback">Skip</th>
+          <th class="greenback">RW</th>
+          <th class="redback">RL</th>
+          <th class="yellowback">Rds</th>
+          <th class="yellowback">RR</th>
+          {% if stats20 %}
+            <td class="numpods blueback">U/D</td>
+            <td class="numpods blueback">OUT</td>
+            <td class="numfpods yellowback">Proj. RR</td>
+          {% endif %}
+        </thead>
+
+        {% for map in all_stats_tab %}
+          {% if map.map_name == "*" %}
+            <tr class="highl">
+              <td>Łącznie</td>
+          {% else %}
+            <tr>
+              <td class="{{map.status}}">{{map.map_name}}</td>
+          {% endif %}
+              <td class="numf greenback">{{map.m_won}}</td>
+              <td class="numf redback">{{map.m_lost}}</td>
+              <td class="numf yellowback">{{map.m_tied}}</td>
+              <td class="numpods yellowback">{{map.m_win_rate | floatformat:3}}</td>
+              <td class="numpods blueback">{{map.m_waiting | disp_timedelta}}</td>
+              <td class="numpods blueback">{{map.m_duration | disp_timedelta}}</td>
+              <td class="numpods redback">{{map.m_skips}}</td>
+              <td class="numpods greenback">{{map.r_won}}</td>
+              <td class="numpods redback">{{map.r_lost}}</td>
+              <td class="numpods yellowback">{{map.r_mean | floatformat:2}}</td>
+              <td class="numpods yellowback">{{map.r_rate | floatformat:3}}</td>
+              {% if stats20 %}
+                <td class="numpods blueback">{{map.ud}}</td>
+                <td class="numpods blueback">{{map.m_out | m_result}}</td>
+                <td class="yellowback">{{map.proj_RR | projrr}}</td>
+              {% endif %}
+            </tr>
+        {% endfor %}
+
+      </table>
+
+      <br>
+      <h2>Podsumowanie indywidualne</h2>
+
+      <table>
+
+        <thead class="end-row">
+          <th>Map</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class="blueback">Pts</th>
+          <th class="blueback">Pts+</th>
+          <th class="yellowback">KR</th>
+          <th class="yellowback end-col">KD</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class="blueback">Pts</th>
+          <th class="blueback">Pts+</th>
+          <th class="yellowback">KR</th>
+          <th class="yellowback end-col">KD</th>
+          <th class="yellowback">Total KD</th>
+        </thead>
+
+        {% for map in indiv_stats_tab %}
+          {% if map.map_name == "*" %}
+            <tr class="highl">
+              <td>Łącznie</td>
+          {% else %}
+            <tr>
+              <td>{{map.map_name}}</td>
+          {% endif %}
+              <td class="numf greenback">{{map.m_K1}}</td>
+              <td class="numf yellowback">{{map.m_A1}}</td>
+              <td class="numf redback">{{map.m_D1}}</td>
+              <td class="numf blueback">{{map.m_MVP1}}</td>
+              <td class="numf blueback">{{map.m_HSP1 | floatformat:1}}</td>
+              <td class="numf blueback">{{map.m_pts1}}</td>
+              <td class="numf blueback">{{map.m_addpts1}}</td>
+              <td class="numf yellowback">{{map.m_KR1 | floatformat:3}}</td>
+              <td class="numf yellowback end-col">{{map.m_KD1 | floatformat:3}}</td>
+              <td class="numf greenback">{{map.m_K2}}</td>
+              <td class="numf yellowback">{{map.m_A2}}</td>
+              <td class="numf redback">{{map.m_D2}}</td>
+              <td class="numf blueback">{{map.m_MVP2}}</td>
+              <td class="numf blueback">{{map.m_HSP2 | floatformat:1}}</td>
+              <td class="numf blueback">{{map.m_pts2}}</td>
+              <td class="numf blueback">{{map.m_addpts2}}</td>
+              <td class="numf yellowback">{{map.m_KR2 | floatformat:3}}</td>
+              <td class="numf yellowback end-col">{{map.m_KD2 | floatformat:3}}</td>
+              <td class="numf yellowback">{{map.tot_KD | floatformat:3}}</td>
+            </tr>
+        {% endfor %}
+
+      </table>
+
+
+    </div>
+
+  {% endblock %}

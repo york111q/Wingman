@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% extends "main_app/base.html" %}
+  {% block after_nav %}
+
+    <div class="container">
+      <h1>Ranking pul</h1>
+
+      <table>
+
+          <thead class="end-row">
+            <th>Rank</th>
+            <th class="end-col">Num</th>
+            <th class="greenback">MW</th>
+            <th class="redback">ML</th>
+            <th class="end-col yellowback">MT</th>
+            <th class="greenback">RW</th>
+            <th class="redback">RL</th>
+            <th class="end-col yellowback">RR</th>
+            <th class="greenback">K</th>
+            <th class="yellowback">A</th>
+            <th class="redback">D</th>
+            <th class="yellowback">KD</th>
+            <th class="blueback">MVP</th>
+            <th class="blueback">HSP</th>
+            <th class="blueback">Pts</th>
+            <th class="end-col blueback">Pts+</th>
+            <th class="greenback">K</th>
+            <th class="yellowback">A</th>
+            <th class="redback">D</th>
+            <th class="yellowback">KD</th>
+            <th class="blueback">MVP</th>
+            <th class="blueback">HSP</th>
+            <th class="blueback">Pts</th>
+            <th class="end-col blueback">Pts+</th>
+          </thead>
+
+        {% for p in pools_list %}
+
+          <tr>
+            <td class="numf">{{ forloop.counter }}</td>
+            <td class="end-col numf">{{ p.pool_num }}</td>
+            <td class="num greenback">{{ p.pool_m_won }}</td>
+            <td class="num redback">{{ p.pool_m_lost }}</td>
+            <td class="end-col num yellowback">{{ p.pool_m_tied }}</td>
+            <td class="num greenback">{{ p.pool_r_won }}</td>
+            <td class="num redback">{{ p.pool_r_lost }}</td>
+            <td class="end-col numf yellowback">{{ p.pool_r_rate|floatformat:3 }}</td>
+            <td class="num greenback">{{ p.pool_K1 }}</td>
+            <td class="num yellowback">{{ p.pool_A1 }}</td>
+            <td class="num redback">{{ p.pool_D1 }}</td>
+            <td class="numf yellowback">{{ p.pool_KD1|floatformat:3 }}</td>
+            <td class="num blueback">{{ p.pool_MVP1 }}</td>
+            <td class="num blueback">{{ p.pool_HSP1 }}</td>
+            <td class="num blueback">{{ p.pool_pts1 }}</td>
+            <td class="end-col num blueback">{{ p.pool_ptsadd1 }}</td>
+            <td class="num greenback">{{ p.pool_K2 }}</td>
+            <td class="num yellowback">{{ p.pool_A2 }}</td>
+            <td class="num redback">{{ p.pool_D2 }}</td>
+            <td class="numf yellowback">{{ p.pool_KD2|floatformat:3 }}</td>
+            <td class="num blueback">{{ p.pool_MVP2 }}</td>
+            <td class="num blueback">{{ p.pool_HSP2 }}</td>
+            <td class="num blueback">{{ p.pool_pts2 }}</td>
+            <td class="end-col num blueback">{{ p.pool_ptsadd2 }}</td>
+          </tr>
+
+        {% endfor %}
+
+      </table>
+    </div>
+
+  {% endblock %}
