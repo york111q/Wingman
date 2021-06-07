@@ -6,7 +6,6 @@ Faker==8.1.4
 gunicorn==20.1.0
 psycopg2 @ file:///C:/ci/psycopg2_1612298766762/work
 python-dateutil==2.8.1
-pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
 six==1.16.0
 soupsieve @ file:///tmp/build/80754af9/soupsieve_1616183228191/work
 sqlparse @ file:///tmp/build/80754af9/sqlparse_1602184451250/work
