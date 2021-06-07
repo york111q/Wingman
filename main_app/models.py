@@ -27,7 +27,7 @@ class Pools(models.Model):
     pool_HSP2 = models.IntegerField(default=0)
     pool_pts2 = models.IntegerField(default=0)
     pool_ptsadd2 = models.IntegerField(default=0)
-    pool_skipped = models.CharField(max_length=128, default='["Nothing skipped yet"]')
+    pool_skipped = models.CharField(max_length=128, default='Error')
 
     def __str__(self):
         return 'Pool nr ' + str(self.pool_num)
