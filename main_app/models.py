@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from datetime import datetime
 
 # Create your models here.
@@ -26,7 +27,7 @@ class Pools(models.Model):
     pool_HSP2 = models.IntegerField(default=0)
     pool_pts2 = models.IntegerField(default=0)
     pool_ptsadd2 = models.IntegerField(default=0)
-    pool_skipped = models.CharField(max_length=128, default='Error')
+    pool_skipped = ArrayField(models.CharField(max_length=32, blank=True), default=list)
 
     def __str__(self):
         return 'Pool nr ' + str(self.pool_num)

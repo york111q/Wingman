@@ -8,7 +8,6 @@ from main_app.models import Matches, Pools
 from datetime import datetime, timedelta
 from django.db.models import Avg, Sum
 from main_app.utils.statistica import MAPS
-import json
 
 # Nicknames in steam CS:GO wingman match history
 PL1 = 'york111'
@@ -61,12 +60,13 @@ def update_pool(pool):
         played = [ x.match_map for x in matches_in_pool ]
 
         for i in played: playables.remove(i)
-        pool.pool_skipped = json.dumps(playables)
+        pool.pool_skipped = playables
 
     elif pool.pool_num > 1:
+
         # Checking which maps we skipped in current pool
         pools = Pools.objects.all()
-        last_skipped = json.loads(pools[pool.pool_num-2].pool_skipped)
+        last_skipped = pools[pool.pool_num-2].pool_skipped
 
         not_skippable = [ map for map, _, active, __ in MAPS if not active ]
         not_skippable += ['*'] + CONNECTED + last_skipped
@@ -86,7 +86,7 @@ def update_pool(pool):
                 l20_stats.append((map, r_won/r_lost))
 
         l20_stats.sort(key = lambda x: x[1])
-        
+
         for i in range(2):
             skipped.append(l20_stats.pop(0)[0])
 
@@ -97,7 +97,8 @@ def update_pool(pool):
         elif len(matches_in_last.filter(match_map=CONNECTED[1])) > 0:
             skipped2.append(CONNECTED[0])
 
-        pool.pool_skipped = json.dumps(skipped2)
+        pool.pool_skipped = skipped2
+        print(skipped2)
 
     pool.save()
 

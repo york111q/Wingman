@@ -6,7 +6,7 @@ django.setup()
 from main_app.models import Matches, Pools
 from django.db.models import Avg, Sum
 from datetime import timedelta
-import json, math
+import math
 
 # List of tuples containing map name, number of pool when map entered wingman,
 # is it still active or not and when map left wingman.
@@ -23,13 +23,13 @@ N_SKIP = ['Calavera', 'Pitstop', 'Rialto']
 
 
 def stat():
-    pools = Pools.objects.all()
+    pools = Pools.objects.all().order_by('-pool_num')
     matches = Matches.objects.filter(match_pool__in=pools)
     return make_stats(matches, pools)
 
 
 def stat20():
-    pools = Pools.objects.all()[len(Pools.objects.all())-20:]
+    pools = Pools.objects.all().order_by('-pool_num')[:20]
     matches = Matches.objects.filter(match_pool__in=pools)
     return make_stats(matches, pools)
 
@@ -41,7 +41,7 @@ def make_stats(matches, pools):
     # Preparing list of all skips to further count it
     skip_list = []
     for pool in pools:
-        skip_list.extend(json.loads(pool.pool_skipped))
+        skip_list.extend(pool.pool_skipped)
 
 
     for map, entered, active, left in MAPS:
@@ -149,14 +149,14 @@ def make_stats(matches, pools):
 
         # Determining if map is active, being played and with witch result
         # to further display colors in summary table
-        cur_pool = pools[len(pools)-1]
+        cur_pool = pools[0]
         cur_pool_matches = Matches.objects.filter(match_pool=cur_pool)
         cur_pool_maps = list(zip(*[(x.match_map, x.match_r_won) for x in cur_pool_matches]))
 
         if not active:
             row['status'] = "notactive"
         else:
-            if map in json.loads(pools[len(pools)-1].pool_skipped):
+            if map in pools[0].pool_skipped:
                 row['status'] = "skipped"
             else:
                 if map not in cur_pool_maps[0]:
@@ -200,7 +200,7 @@ def make_stats(matches, pools):
 
 
     # Adding predictation of skipped maps
-    ls_skipped = json.loads(pools[len(pools)-1].pool_skipped)
+    ls_skipped = pools[0].pool_skipped
     ls_skipped.extend(['Calavera', 'Pitstop', 'Rialto'])
     pred_skipped = [ all_stats.index(x) for x in all_stats if x['map_name'] not in ls_skipped ]
     for i in range(2):
@@ -209,7 +209,7 @@ def make_stats(matches, pools):
 
     # Counting prediction which score to skip or save from skip (U/D)
     maps_to_count = set([ map for map, entered, active, left in MAPS if active ])
-    maps_not_to_count = json.loads(pools[len(pools)-1].pool_skipped)
+    maps_not_to_count = pools[0].pool_skipped
     maps_not_to_count.extend(N_SKIP)
     maps_not_to_count = set(maps_not_to_count)
     maps_to_count = list(maps_to_count.difference(maps_not_to_count))
