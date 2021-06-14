@@ -24,3 +24,7 @@ def projrr(value):
         return f'{value[0]:.3f} | {value[1]:.3f}'
     else:
         return f'{value:.3f}'
+
+@register.filter
+def rawdate(value):
+    return value.replace('T', ' ')

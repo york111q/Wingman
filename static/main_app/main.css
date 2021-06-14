@@ -15,6 +15,16 @@ td, th{
   border: 1px solid black;
 }
 
+.legend{
+  font-size: 70%;
+  display: inline-block;
+  /* text-align: justify; */
+}
+
+#index{
+  text-align: justify;
+}
+
 #everything{
   padding-top: 60px;
   padding-bottom: 30px;
@@ -74,6 +84,7 @@ td.numpods{
 
 .highl{
   border-top: 2px solid black;
+  border-bottom: 2px solid black;
   font-weight: bold;
 }
 

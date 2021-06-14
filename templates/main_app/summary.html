@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+{% extends "main_app/base.html" %}
+{% load my_filter %}
+  {% block after_nav %}
+
+    <div class="container">
+      <h2>Match summary</h2>
+
+      <table>
+
+        <thead class="end-row">
+          <th>Map</th>
+          <th class="greenback">MW</th>
+          <th class="redback">ML</th>
+          <th class="yellowback">MT</th>
+          <th class="yellowback">WR</th>
+          <th class="blueback">Wait</th>
+          <th class="blueback">Dur</th>
+          <th class="redback">Skip</th>
+          <th class="greenback">RW</th>
+          <th class="redback">RL</th>
+          <th class="yellowback">Rds</th>
+          <th class="yellowback">RR</th>
+          {% if stats20 %}
+            <th class="numpods blueback">U/D</th>
+            <th class="numpods blueback">OUT</th>
+            <th class="numfpods yellowback">Proj. RR</th>
+          {% endif %}
+        </thead>
+
+        {% for map in all_stats_tab %}
+          {% if map.map_name == "*" %}
+            <tr class="highl">
+              <td>All</td>
+          {% else %}
+            <tr>
+              <td class="{{map.status}}">{{map.map_name}}</td>
+          {% endif %}
+              <td class="numf greenback">{{map.m_won}}</td>
+              <td class="numf redback">{{map.m_lost}}</td>
+              <td class="numf yellowback">{{map.m_tied}}</td>
+              <td class="numpods yellowback">{{map.m_win_rate | floatformat:3}}</td>
+              <td class="numpods blueback">{{map.m_waiting | disp_timedelta}}</td>
+              <td class="numpods blueback">{{map.m_duration | disp_timedelta}}</td>
+              <td class="numpods redback">{{map.m_skips}}</td>
+              <td class="numpods greenback">{{map.r_won}}</td>
+              <td class="numpods redback">{{map.r_lost}}</td>
+              <td class="numpods yellowback">{{map.r_mean | floatformat:2}}</td>
+              <td class="numpods yellowback">{{map.r_rate | floatformat:3}}</td>
+              {% if stats20 %}
+                <td class="numpods blueback">{{map.ud}}</td>
+                <td class="numpods blueback">{{map.m_out | m_result}}</td>
+                <td class="yellowback">{{map.proj_RR | projrr}}</td>
+              {% endif %}
+            </tr>
+        {% endfor %}
+
+      </table>
+
+      <p class="legend">
+        <strong>Background color</strong> - result of match in current pool (green - won, yellow - tied, red - lost, blue - skipped), grey if map cannot be played anymore, none if map yet to play,
+        <strong><s>Map</s></strong> - projected skip in next pool,
+        <strong>MW</strong> - matches won,
+        <strong>ML</strong> - matches lost,
+        <strong>MT</strong> - matches tied,
+        <strong>WR</strong> - win ratio (MW/ML),
+        <strong>Wait</strong> - mean waiting time for a match,
+        <strong>Dur</strong> - mean total time of a match,
+        <strong>Skip</strong> - number of map skips,
+        <strong>RW</strong> - round won,
+        <strong>RL</strong> - round lost,
+        <strong>Rds</strong> - mean number of rounds in single match,
+        <strong>RR</strong> - round ratio (RW/RL){% if stats20 %},
+          <strong>U/D</strong> - match result that guarantee map to be skipped or be save from skip,
+          <strong>OUT</strong> - match result that will not be counted next pool (matches in 20th pool from now),
+          <strong>Proj. RR</strong> - projected round rate - if played - round rate after OUT, else round rate with result 9:0 or 0:9
+        {% endif %}
+      </p>
+
+      <p></p>
+      <h2>Individual summary</h2>
+
+      <table>
+
+        <thead class="end-row">
+          <th>Map</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class="blueback">Pts</th>
+          <th class="blueback">Pts+</th>
+          <th class="yellowback">KR</th>
+          <th class="yellowback end-col">KD</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class="blueback">Pts</th>
+          <th class="blueback">Pts+</th>
+          <th class="yellowback">KR</th>
+          <th class="yellowback end-col">KD</th>
+          <th class="yellowback">Total KD</th>
+        </thead>
+
+        {% for map in indiv_stats_tab %}
+          {% if map.map_name == "*" %}
+            <tr class="highl">
+              <td>All</td>
+          {% else %}
+            <tr>
+              <td>{{map.map_name}}</td>
+          {% endif %}
+              <td class="numf greenback">{{map.m_K1}}</td>
+              <td class="numf yellowback">{{map.m_A1}}</td>
+              <td class="numf redback">{{map.m_D1}}</td>
+              <td class="numf blueback">{{map.m_MVP1}}</td>
+              <td class="numf blueback">{{map.m_HSP1 | floatformat:1}}</td>
+              <td class="numf blueback">{{map.m_pts1}}</td>
+              <td class="numf blueback">{{map.m_addpts1}}</td>
+              <td class="numf yellowback">{{map.m_KR1 | floatformat:3}}</td>
+              <td class="numf yellowback end-col">{{map.m_KD1 | floatformat:3}}</td>
+              <td class="numf greenback">{{map.m_K2}}</td>
+              <td class="numf yellowback">{{map.m_A2}}</td>
+              <td class="numf redback">{{map.m_D2}}</td>
+              <td class="numf blueback">{{map.m_MVP2}}</td>
+              <td class="numf blueback">{{map.m_HSP2 | floatformat:1}}</td>
+              <td class="numf blueback">{{map.m_pts2}}</td>
+              <td class="numf blueback">{{map.m_addpts2}}</td>
+              <td class="numf yellowback">{{map.m_KR2 | floatformat:3}}</td>
+              <td class="numf yellowback end-col">{{map.m_KD2 | floatformat:3}}</td>
+              <td class="numf yellowback">{{map.tot_KD | floatformat:3}}</td>
+            </tr>
+        {% endfor %}
+
+      </table>
+
+      <p class="legend">
+        <strong>K</strong> - kills,
+        <strong>A</strong> - assists,
+        <strong>D</strong> - deaths,
+        <strong>MVP</strong> - number of MVPs,
+        <strong>HSP</strong> - headshot percentage,
+        <strong>Pts</strong> - points in table,
+        <strong>Pts+</strong> - points that are not from kills and assists (eg. planting bomb),
+        <strong>KR</strong> - kills per round (K/(RW+RL)),
+        <strong>KD</strong> - kill-death ratio (K/D),
+        <strong>Total KD</strong> - kill-death ratio if we were one player ((K1+K2)/(D1+D2))
+      </p>
+
+
+    </div>
+
+  {% endblock %}

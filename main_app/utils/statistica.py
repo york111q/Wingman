@@ -112,7 +112,7 @@ def make_stats(matches, pools):
 
 
             # Looking for results which will be out of 20 pools after this one
-            last_pool_matches = Matches.objects.filter(match_pool__in=pools[0:1])
+            last_pool_matches = Matches.objects.filter(match_pool__in=pools[19:20])
             out_pool_maps = list(zip(*[(x.match_map, x.match_r_won, x.match_r_lost) for x in last_pool_matches]))
 
             if map in out_pool_maps[0]:

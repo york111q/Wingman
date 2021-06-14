@@ -2,8 +2,31 @@
 {% extends "main_app/base.html" %}
   {% block after_nav %}
 
-    <div class="container">
-      <h1>Strona główna projektu Wingman</h1>
+    <div id="index" class="container">
+      <h1>Welcome to Wingman project</h1>
+
+      <br>
+      <h3>How it works:</h3>
+      <ol>
+        <li class="lead">Match results along with statistics can be found on the official Steam website, but they are only available after logging in, which makes it impossible to scrape data directly from there.</li>
+        <li class="lead">After a game session, I save the web page as an .html file and upload it to the form available at "New matches".</li>
+        <li class="lead">The script, using BeautifulSoup, scrapes data on new matches and saves it in a temporary .txt file based on which a new form is created where I can select matches that were played outside of pools and should not be included in the database.</li>
+        <li class="lead">After verification the matches are added either to the list of matches outside of pools or to the database.</li>
+        <li class="lead">When entering the summary or summary 20 page, another script creates a summary using data aggregation.</li>
+        <li class="lead">The list of matches and the ranking of pools is displayed using ListView.</li>
+        <li class="lead">The project is hosted on Heroku and therefore the database used is PostgreSQL.</li>
+      </ol>
+
+
+      <br>
+      <h3>Rules of play:</h3>
+      <ol>
+        <li class="lead">Out of all the maps available in the Wingman CS:GO queue, we play 7 different ones. We call such a set of 7 matches a 'pool'.</li>
+        <li class="lead">After each pool, maps with the worst round ratio are chosen to be skipped in the next pool so that each pool has 7 maps. The only exception is when we lose a match 0:9, in which case this map will be skipped in the next pool regardless of the round ratio.</li>
+        <li class="lead">You cannot skip maps that were skipped in the previous pool.</li>
+        <li class="lead">Two maps, currently: Calavera, Pitstop, were recently added to the game and we decided that in each pool we will play one of them, skip the other and complete the pool with 6 maps from the others. The matchmaking for CS:GO randomly decides which of these two maps will appear in the pool.</li>
+      </ol>
+
     </div>
 
   {% endblock %}

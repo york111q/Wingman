@@ -1,0 +1,26 @@
+{% extends "main_app/base.html" %}
+{% load my_filter %}
+  {% block after_nav %}
+
+    <div class="container">
+
+      <h3>Check matches that were played outside pools:</h3>
+
+      <form method="post">
+        {% csrf_token %}
+        {% for m in matches %}
+
+          <input type="checkbox" name="{{ m.0.1 }}">
+          <span>{{ m.0.1|rawdate }} {{ m.0.0 }} {{ m.1.12 }}:{{ m.1.13 }}</span>
+          <br>
+
+        {% endfor %}
+
+        <input type="submit" name="" value="Submit">
+
+      </form>
+
+
+    </div>
+
+  {% endblock %}

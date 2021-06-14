@@ -1,0 +1,67 @@
+{% extends "main_app/base.html" %}
+{% load my_filter %}
+  {% block after_nav %}
+
+    <style>
+      table tr:nth-of-type(7n+{{ matches_list.count|modulo:7 }}) td {
+          border-bottom: 2px solid black;
+      }
+    </style>
+
+    <div class="container">
+      <h1>All matches</h1>
+      <table>
+        <thead class="end-row">
+          <th>Map</th>
+          <th>Date</th>
+          <th>Waiting</th>
+          <th>Duration</th>
+          <th class='end-col'>Result</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class='end-col blueback'>Pts</th>
+          <th class="greenback">K</th>
+          <th class="yellowback">A</th>
+          <th class="redback">D</th>
+          <th class="blueback">MVP</th>
+          <th class="blueback">HSP</th>
+          <th class="blueback">Pts</th>
+        </thead>
+
+        {% for m in matches_list %}
+          <tr>
+            <td>{{m.match_map}}</td>
+            <td>{{m.match_date | date:'Y-m-d H:i'}}</td>
+            <td>{{m.match_waiting | disp_timedelta}}</td>
+            <td>{{m.match_duration | disp_timedelta}}</td>
+
+            {% if m.match_r_won == 9 %}
+              <td class='end-col mwon'><strong>{{m.match_r_won}}:{{m.match_r_lost}}</strong></td>
+            {% elif m.match_r_won == 8 %}
+              <td class='end-col mtied'><strong>{{m.match_r_won}}:{{m.match_r_lost}}</strong></td>
+            {% else %}
+              <td class='end-col mlost'><strong>{{m.match_r_won}}:{{m.match_r_lost}}</strong></td>
+            {% endif %}
+
+            <td class='num greenback'>{{m.match_K1}}</td>
+            <td class='num yellowback'>{{m.match_A1}}</td>
+            <td class='num redback'>{{m.match_D1}}</td>
+            <td class='num blueback'>{{m.match_MVP1}}</td>
+            <td class='num blueback'>{{m.match_HSP1}}</td>
+            <td class='num end-col blueback'>{{m.match_score1}}</td>
+            <td class='num greenback'>{{m.match_K2}}</td>
+            <td class='num yellowback'>{{m.match_A2}}</td>
+            <td class='num redback'>{{m.match_D2}}</td>
+            <td class='num blueback'>{{m.match_MVP2}}</td>
+            <td class='num blueback'>{{m.match_HSP2}}</td>
+            <td class='num blueback'>{{m.match_score2}}</td>
+          </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+
+  {% endblock %}

@@ -3,7 +3,7 @@
   {% block after_nav %}
 
     <div class="container">
-      <h1>Ranking pul</h1>
+      <h1>Pool ranking</h1>
 
       <table>
 
@@ -35,8 +35,11 @@
           </thead>
 
         {% for p in pools_list %}
-
-          <tr>
+          {% if p.pool_num == max_pool %}
+            <tr class="highl">
+          {% else %}
+            <tr>
+          {% endif %}
             <td class="numf">{{ forloop.counter }}</td>
             <td class="end-col numf">{{ p.pool_num }}</td>
             <td class="num greenback">{{ p.pool_m_won }}</td>

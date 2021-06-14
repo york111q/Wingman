@@ -1,0 +1,116 @@
+body{
+  /* background-color: #8B8E90; */
+  background-color: #ABAEB0;
+}
+
+table{
+  width: 100%;
+  text-align: center;
+  background-color: #e0e0e0;
+  /* background-color: #ABAEB0; */
+  border: 2px solid black;
+}
+
+td, th{
+  border: 1px solid black;
+}
+
+.legend{
+  text-align: justify;
+  font-size: 70%;
+}
+
+#everything{
+  padding-top: 60px;
+  padding-bottom: 30px;
+}
+
+.num{
+  width: 4%;
+}
+
+.numf{
+  width: 4.7%;
+}
+
+td.numpods{
+  width: 6%;
+}
+
+.numfpods{
+  width: 10%;
+}
+
+.end-col{
+  border-right: 2px solid black;
+}
+
+.end-row{
+  border-bottom: 2px solid black;
+}
+
+.redback{
+  background-color: #df815b;
+}
+
+.yellowback{
+  background-color: #e5d38b;
+}
+
+.greenback{
+  background-color: #a5cdb3;
+}
+
+.blueback{
+  background-color: #96b7c6;
+}
+
+.mwon{
+  color: #009b37;
+}
+
+.mlost{
+  color: #9f3d00;
+}
+
+.mtied{
+  color: #B38901;
+}
+
+.highl{
+  border-top: 2px solid black;
+  font-weight: bold;
+}
+
+/* MATCH STATUS CLASSES */
+.notactive{
+  background: linear-gradient(90deg, #a1a1a1 0%, rgba(0,0,0,0) 100%);
+}
+
+.notplayed{
+  /* hehe */
+}
+
+.matchwon{
+  background: linear-gradient(90deg, #a5cdb3 0%, rgba(0,0,0,0) 100%);
+}
+
+.matchtied{
+  background: linear-gradient(90deg, #e5d38b 0%, rgba(0,0,0,0) 100%);
+}
+
+.matchlost{
+  background: linear-gradient(90deg, #df815b 0%, rgba(0,0,0,0) 100%);
+}
+
+.skipped{
+  background: linear-gradient(90deg, #96b7c6 0%, rgba(0,0,0,0) 100%);
+}
+
+.willskip{
+  text-decoration: line-through;
+}
+
+.error{
+  background-color: red
+}

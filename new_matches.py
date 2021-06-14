@@ -104,7 +104,7 @@ def update_pool(pool):
 
 
 path_to_strona = os.path.join(os.getcwd(), 'static', 'main_app', 'strona', 'strona.html')
-path_to_notpool = os.path.join(os.getcwd(), 'static', 'main_app', 'notpool.txt')
+path_to_notpool = os.path.join(os.getcwd(), 'main_app', 'utils', 'notpool.txt')
 
 # Creating list of matches that wasn't played in pool-play
 print("Preparing list of non-pool matches")
