@@ -14,7 +14,7 @@ PL1 = 'york111'
 PL2 = 'I bring life and hope'
 
 # Maps in separate rotation (if played one of them the other get skipped)
-CONNECTED = ['de_calavera', 'de_pitstop']
+CONNECTED = ['Calavera', 'Pitstop']
 
 
 def update_pool(pool):
