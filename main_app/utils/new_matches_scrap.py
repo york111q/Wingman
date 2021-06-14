@@ -16,7 +16,7 @@ PL1 = 'york111'
 PL2 = 'I bring life and hope'
 
 # Maps in separate rotation (if played one of them the other get skipped)
-CONNECTED = ['de_calavera', 'de_pitstop']
+CONNECTED = ['Calavera', 'Pitstop']
 
 # Path to text file with match dates that wasn't played as pool
 path_to_notpool = os.path.join(os.getcwd(), 'main_app', 'utils', 'notpool.txt')
@@ -198,6 +198,7 @@ def update_pool(pool):
         playables = [ x[0] for x in MAPS[:-1] if x[1] < pool.pool_num < x[3] ]
         matches_in_pool = Matches.objects.filter(match_pool=pool)
         played = [ x.match_map for x in matches_in_pool ]
+        print(played)
 
         for i in played: playables.remove(i)
         pool.pool_skipped = playables

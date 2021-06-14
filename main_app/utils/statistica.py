@@ -14,8 +14,8 @@ MAPS = [('Shortdust', 0, True, 999), ('Overpass', 0, True, 999),
         ('Rialto', 0, False, 139), ('Inferno', 0, True, 999),
         ('Train', 0, True, 999), ('Shortnuke', 0, True, 999),
         ('Cobblestone', 0, True, 999), ('Lake', 0, True,999),
-        ('Vertigo', 63, True, 999), ('de_calavera', 138, True, 999),
-        ('de_pitstop', 138, True, 999), ('*', 0 , True, 999)]
+        ('Vertigo', 63, True, 999), ('Calavera', 138, True, 999),
+        ('Pitstop', 138, True, 999), ('*', 0 , True, 999)]
 
 # Maps that cannot be skipped based on their round rate: connected or not active
 # Also their format is like in display not like in MAPS
@@ -43,7 +43,6 @@ def make_stats(matches, pools):
     for pool in pools:
         skip_list.extend(pool.pool_skipped)
 
-
     for map, entered, active, left in MAPS:
         if map == '*':
             m_matches = matches
@@ -52,7 +51,7 @@ def make_stats(matches, pools):
 
         if len(m_matches) == 0:
             row = {
-                'map_name': map.replace('de_', '').capitalize(),
+                'map_name': map,
                 'm_won': 0,
                 'm_lost': 0,
                 'm_tied': 0,
@@ -70,7 +69,7 @@ def make_stats(matches, pools):
             }
 
             irow = {
-                'map_name': map.replace('de_', '').capitalize(),
+                'map_name': map,
                 'm_K1': 0,
                 'm_A1': 0,
                 'm_D1': 0,
@@ -94,7 +93,7 @@ def make_stats(matches, pools):
 
         else:
             row = {
-                'map_name': map.replace('de_', '').capitalize(),
+                'map_name': map,
                 'm_won': len(m_matches.filter(match_r_won=9)),
                 'm_lost': len(m_matches.filter(match_r_lost=9)),
                 'm_tied': len(m_matches.filter(match_r_won=8)),
@@ -123,7 +122,7 @@ def make_stats(matches, pools):
 
 
             irow = {
-                'map_name': map.replace('de_', '').capitalize(),
+                'map_name': map,
                 'm_K1': m_matches.aggregate(n=Sum('match_K1'))['n'],
                 'm_A1': m_matches.aggregate(n=Sum('match_A1'))['n'],
                 'm_D1': m_matches.aggregate(n=Sum('match_D1'))['n'],
