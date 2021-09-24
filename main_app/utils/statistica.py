@@ -14,12 +14,13 @@ MAPS = [('Shortdust', 0, True, 999), ('Overpass', 0, True, 999),
         ('Rialto', 0, False, 139), ('Inferno', 0, True, 999),
         ('Train', 0, True, 999), ('Shortnuke', 0, True, 999),
         ('Cobblestone', 0, True, 999), ('Lake', 0, True,999),
-        ('Vertigo', 63, True, 999), ('Calavera', 138, True, 999),
-        ('Pitstop', 138, True, 999), ('*', 0 , True, 999)]
+        ('Vertigo', 63, True, 999), ('Calavera', 138, False, 142),
+        ('Pitstop', 138, False, 142), ('Extraction', 141, True, 999),
+        ('Ravine', 141, True, 999), ('*', 0 , True, 999)]
 
 # Maps that cannot be skipped based on their round rate: connected or not active
 # Also their format is like in display not like in MAPS
-N_SKIP = ['Calavera', 'Pitstop', 'Rialto']
+N_SKIP = ['Calavera', 'Pitstop', 'Rialto', 'Extraction', 'Ravine']
 
 
 def stat():
@@ -104,7 +105,7 @@ def make_stats(matches, pools):
                 'm_skips': skip_list.count(map)
             }
 
-            row['m_win_rate'] = row['m_won'] / row['m_lost']
+            row['m_win_rate'] = row['m_won'] / row['m_lost'] if row['m_won'] and row['m_lost'] else 0
             row['r_mean'] = (row['r_won'] + row['r_lost']) / (row['m_won'] + row['m_lost'] + row['m_tied'])
             row['r_rate'] = row['r_won'] / row['r_lost']
             row['ud'] = '-:-'

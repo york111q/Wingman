@@ -14,7 +14,7 @@ PL1 = 'york111'
 PL2 = 'I bring life and hope'
 
 # Maps in separate rotation (if played one of them the other get skipped)
-CONNECTED = ['Calavera', 'Pitstop']
+CONNECTED = [('Calavera', 'Pitstop'), ('Extraction', 'Ravine')]
 
 
 def update_pool(pool):
@@ -69,7 +69,8 @@ def update_pool(pool):
         last_skipped = pools[pool.pool_num-2].pool_skipped
 
         not_skippable = [ map for map, _, active, __ in MAPS if not active ]
-        not_skippable += ['*'] + CONNECTED + last_skipped
+        con = [x for tp in CONNECTED for x in tp]
+        not_skippable += ['*'] + con + last_skipped
 
         matches_in_last = Matches.objects.filter(match_pool=pool)
         skipped = [ x.match_map for x in matches_in_last if x.match_r_won == 0 ]
@@ -92,10 +93,11 @@ def update_pool(pool):
 
         skipped2 = list(set(skipped[0:2]))
 
-        if len(matches_in_last.filter(match_map=CONNECTED[0])) > 0:
-            skipped2.append(CONNECTED[1])
-        elif len(matches_in_last.filter(match_map=CONNECTED[1])) > 0:
-            skipped2.append(CONNECTED[0])
+        for con in CONNECTED:
+            if len(matches_in_last.filter(match_map=con[0])) > 0:
+                skipped2.append(con[1])
+            elif len(matches_in_last.filter(match_map=con[1])) > 0:
+                skipped2.append(con[0])
 
         pool.pool_skipped = skipped2
         print(skipped2)
